@@ -3,9 +3,8 @@ package com.exercicio;
 import java.time.LocalDate;
 
 public class CodificadorAutoKey implements Codificador {
-
-    private final String chaveInicial = "Rosana";
-    private String mapaEspacos = "";
+    private final String chaveInicial ="Rosana";
+    private String mapaEspacos ="";
 
     @Override
     public String getNome() {
@@ -22,14 +21,6 @@ public class CodificadorAutoKey implements Codificador {
         return 3;
     }
 
-    private boolean isAsciiLetter(char c) {
-        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
-    }
-
-    private char toUpperAscii(char c) {
-        return Character.toUpperCase(c);
-    }
-
     @Override
     public String codifica(String texto) {
         StringBuilder letras = new StringBuilder();
@@ -37,14 +28,13 @@ public class CodificadorAutoKey implements Codificador {
 
         for (int i = 0; i < texto.length(); i++) {
             char c = texto.charAt(i);
-            if (isAsciiLetter(c)) {
-                letras.append(toUpperAscii(c));
+            if (Character.isLetter(c)) {
+                letras.append(Character.toUpperCase(c));
                 mapa.append("L"); 
             } else {
                 mapa.append(c); 
             }
         }
-
         this.mapaEspacos = mapa.toString();
 
         String base = chaveInicial.toUpperCase().replaceAll("[^A-Z]", "");
@@ -57,14 +47,12 @@ public class CodificadorAutoKey implements Codificador {
             int c = (p + k) % 26;
             cifradas.append((char) (c + 'A'));
         }
-
         return cifradas.toString();
     }
 
     @Override
     public String decodifica(String textoCodificado) {
         String letras = textoCodificado.toUpperCase().replaceAll("[^A-Z]", "");
-
         String base = chaveInicial.toUpperCase().replaceAll("[^A-Z]", "");
         StringBuilder chave = new StringBuilder(base);
         StringBuilder decifradas = new StringBuilder(letras.length());
@@ -77,9 +65,9 @@ public class CodificadorAutoKey implements Codificador {
             decifradas.append(letra);
             chave.append(letra);
         }
-
         StringBuilder reconstruido = new StringBuilder();
         int idxLetra = 0;
+
         for (int i = 0; i < mapaEspacos.length(); i++) {
             char m = mapaEspacos.charAt(i);
             if (m == 'L') {
@@ -88,7 +76,6 @@ public class CodificadorAutoKey implements Codificador {
                 reconstruido.append(m);
             }
         }
-
         return reconstruido.toString();
     }
 }

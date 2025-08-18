@@ -2,8 +2,8 @@ package com.exercicio;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Codificador cod = new CodificadorSimples();
-        Codificador cod1 = new CodificadorAutoKey();
+        //Codificador cod = new CodificadorSimples();
+        Codificador cod = new CodificadorParaBaixinhos();
 
         System.out.println("Codificador: "+cod.getNome());
         System.out.println("Versao: "+cod.getDataCriacao());
@@ -29,5 +29,3 @@ public class App {
         System.out.println("Texto decodificado: "+decodificado1);
 
     }
-
-}
